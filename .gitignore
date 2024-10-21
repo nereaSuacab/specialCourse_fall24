@@ -1,4 +1,3 @@
 data/
-volume.vtk
-skeleton.npy
-skeleton.vtk
+hoa/
+outputs/
