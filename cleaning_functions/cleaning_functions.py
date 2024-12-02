@@ -99,3 +99,17 @@ def print_branches(skeleton_cleaned):
     print(f"Number of branch type 1: {len(branch_type_1)}")
     print(f"Number of branch type 2: {len(branch_type_2)}")
     print(f"Number of branch type 3: {len(branch_type_3)}")
+
+def remove_branches_baseline(skeleton, branch_data, skel):
+    # Copy the skeleton to avoid modifying the original
+    skeleton_cleaned = np.copy(skeleton)
+    
+    # Iterate over each branch
+    for branch_id in branch_data.index:
+        # Only process branches of type 1
+        if branch_data.loc[branch_id, 'branch-type'] == 1:
+            coordinates = skel.path_coordinates(branch_id)
+            for coord in coordinates:
+                skeleton_cleaned[coord[0], coord[1], coord[2]] = 0
+    
+    return skeleton_cleaned
