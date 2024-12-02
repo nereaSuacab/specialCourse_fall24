@@ -26,14 +26,16 @@ def neighbors(coord):
 def is_junction_point(coord, skeleton):
     neighboring_coords = neighbors(coord)
     counter = 0
+    z_max, y_max, x_max = skeleton.shape  # Get the dimensions of the skeleton array
+
     for neigh in neighboring_coords:
-        if skeleton[neigh[0], neigh[1], neigh[2]].item() > 0:
-            counter = counter + 1
-    
-    if counter > 2:
-        return True
-    else:
-        return False
+        x, y, z = neigh
+        # Ensure each coordinate is within the bounds of the array
+        if 0 <= x < x_max and 0 <= y < y_max and 0 <= z < z_max:
+            if skeleton[z, y, x].item() > 0:
+                counter += 1
+
+    return counter > 2
 
     # skeleton_neighbors = sum([skeleton[tuple(neigh)] > 0 for neigh in neighboring_coords])
     # return skeleton_neighbors.item() > 2  # A junction point has more than 2 neighbors
